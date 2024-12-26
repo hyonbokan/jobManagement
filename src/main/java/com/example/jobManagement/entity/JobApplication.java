@@ -3,6 +3,7 @@ package com.example.jobManagement.entity;
 import com.example.jobManagement.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,10 @@ public class JobApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Company is required")
     private String position;
 
+    @NotBlank(message = "Position is required")
     private String company;
 
     @Enumerated(EnumType.STRING)

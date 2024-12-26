@@ -4,8 +4,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jobManagement.service.JobApplicationService;
+
+import jakarta.validation.Valid;
+
 import com.example.jobManagement.dto.JobApplicationDTO;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +43,9 @@ public class JobApplicationController {
     }
 
     @PostMapping
-    public ResponseEntity<JobApplicationDTO> createApplication(@RequestBody JobApplicationDTO dto){
+    public ResponseEntity<JobApplicationDTO> createApplication(@Valid @RequestBody JobApplicationDTO dto){
         JobApplicationDTO newApplication = jobApplicationService.createApplication(dto);
-        return ResponseEntity.ok(newApplication);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newApplication); // 201 created
     }
     
     @PutMapping("/{id}")
@@ -56,7 +60,7 @@ public class JobApplicationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
         jobApplicationService.deleteApplication(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build(); // 204 no content
     }
 
 }

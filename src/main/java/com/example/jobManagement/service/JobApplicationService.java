@@ -17,7 +17,10 @@ public class JobApplicationService {
     private final JobApplicationRepository jobApplicationRepository;
     private final JobApplicationMapper jobApplicationMapper;
 
-    public JobApplicationService(JobApplicationRepository jobApplicationRepository, JobApplicationMapper jobApplicationMapper) {
+    public JobApplicationService(
+        JobApplicationRepository jobApplicationRepository,
+        JobApplicationMapper jobApplicationMapper
+        ) {
         this.jobApplicationRepository = jobApplicationRepository;
         this.jobApplicationMapper = jobApplicationMapper;
     }
@@ -50,27 +53,6 @@ public class JobApplicationService {
             JobApplication updatedApplication = jobApplicationRepository.save(existingApplication);
 
             return jobApplicationMapper.toDto(updatedApplication);
-
-
-            // if(updatedApplication.getCompany() != null) {
-            //     existingApplication.setCompany(updatedApplication.getCompany());
-            // }
-            // if(updatedApplication.getPosition() != null) {
-            //     existingApplication.setCompany(updatedApplication.getCompany());
-            // }
-            // if(updatedApplication.getStatus() != null) {
-            //     existingApplication.setStatus(updatedApplication.getStatus());
-            // }
-            // if(updatedApplication.getApplicationDate() != null) {
-            //     existingApplication.setApplicationDate(updatedApplication.getApplicationDate());
-            // }
-            // if(updatedApplication.getInterviewDate() != null) {
-            //     existingApplication.setInterviewDate(updatedApplication.getInterviewDate());
-            // }
-            // if(updatedApplication.getNotes() != null) {
-            //     existingApplication.setNotes(updatedApplication.getNotes());
-            // }
-            
     }
 
     public JobApplicationDTO getApplicationById(Long id) {
@@ -80,6 +62,9 @@ public class JobApplicationService {
     }
 
     public void deleteApplication(Long id) {
+        if (!jobApplicationRepository.existsById(id)) {
+            throw new RuntimeException("Application with ID: " + id + " is not found.");
+        }
         jobApplicationRepository.deleteById(id);
     }
 }
