@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import SearchBar from "../components/SearchBar";
 import AddButton from "../components/AddButton";
 import JobTable from "../components/JobTable";
@@ -26,16 +26,12 @@ const HomePage = () => {
     };
   
     const handleAddApplication = () => {
-      // Placeholder for adding application logic
       console.log("Add new application clicked!");
     };
   
     return (
       <Box sx={{ display: "flex", height: "100vh" }}>
         <Box sx={{ flex: 1, padding: 4, overflowY: "auto" }}>
-          <Typography variant="h4" sx={{ mb: 3 }}>
-            Job Applications
-          </Typography>
           <SearchBar onSearch={handleSearch} />
           <AddButton onClick={handleAddApplication} />
           <JobTable applications={filteredApplications} />

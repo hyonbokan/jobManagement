@@ -1,20 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Box } from "@mui/material";
-import Navbar from '../components/Navbar';
 import HomePage from '../pages/HomePage';
+import Layout from '../components/Layout';
 
 const AppRoutes = () => {
     return (
         <Router>
-            <Box sx={{ display: 'flex', height: '100vh' }}>
-                <Navbar />
-                <Box sx={{ flex: 1, overflow: "auto" }}>
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                    </Routes>
-                </Box>
-            </Box>
+            <Routes>
+                {/* Routes wrapped with Layout */}
+                <Route element={<Layout />}>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="*" element={<HomePage />} /> {/* Fallback */}
+                </Route>
+            </Routes>
         </Router>
     );
 };
