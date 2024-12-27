@@ -32,6 +32,7 @@ public class JobApplication {
     private ApplicationStatus status = ApplicationStatus.APPLIED;
 
     @Temporal(TemporalType.DATE)
+    @FutureOrPresent(message = "Application date must be in the future or present.")
     private Date applicationDate;
 
     @Temporal(TemporalType.DATE)

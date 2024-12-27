@@ -42,7 +42,7 @@ public class JobApplicationController {
         return ResponseEntity.ok(application);
     }
 
-    @PostMapping
+    @PostMapping("/create-application")
     public ResponseEntity<JobApplicationDTO> createApplication(@Valid @RequestBody JobApplicationDTO dto){
         JobApplicationDTO newApplication = jobApplicationService.createApplication(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(newApplication); // 201 created
