@@ -1,13 +1,6 @@
 package com.example.jobManagement.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.jobManagement.service.JobApplicationService;
-
-import jakarta.validation.Valid;
-
-import com.example.jobManagement.dto.JobApplicationDTO;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +10,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.jobManagement.dto.JobApplicationDTO;
+import com.example.jobManagement.service.JobApplicationService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("job-applications")
 public class JobApplicationController {
     
-    private JobApplicationService jobApplicationService;
+    private final JobApplicationService jobApplicationService;
 
     public JobApplicationController(JobApplicationService jobApplicationService) {
         this.jobApplicationService = jobApplicationService;
@@ -45,7 +43,7 @@ public class JobApplicationController {
     @PostMapping("/create-application")
     public ResponseEntity<JobApplicationDTO> createApplication(@Valid @RequestBody JobApplicationDTO dto){
         JobApplicationDTO newApplication = jobApplicationService.createApplication(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newApplication); // 201 created
+        return ResponseEntity.status(HttpStatus.CREATED).body(newApplication);
     }
     
     @PutMapping("/{id}")

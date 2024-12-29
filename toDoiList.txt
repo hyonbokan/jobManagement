@@ -1,0 +1,3 @@
+1. Job post detail page
+2. Update job post / delete job post
+3. beautify the job post table

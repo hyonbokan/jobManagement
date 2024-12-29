@@ -1,16 +1,27 @@
 package com.example.jobManagement.entity;
 
+import java.util.Date;
+
 import com.example.jobManagement.enums.ApplicationStatus;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
-import java.util.Date;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -27,6 +38,13 @@ public class JobApplication {
 
     @NotBlank(message = "Position is required")
     private String company;
+
+    @NotBlank(message = "Link is required")
+    private String link;
+
+    @NotBlank(message = "Description is required")
+    @Lob
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status = ApplicationStatus.APPLIED;

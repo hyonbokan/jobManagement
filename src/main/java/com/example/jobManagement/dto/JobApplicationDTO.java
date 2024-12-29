@@ -1,8 +1,8 @@
 package com.example.jobManagement.dto;
 
-import com.example.jobManagement.enums.ApplicationStatus;
-
 import java.util.Date;
+
+import com.example.jobManagement.enums.ApplicationStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +15,8 @@ public class JobApplicationDTO {
     private ApplicationStatus status;
     private Date applicationDate;
     private Date interviewDate;
+    private String link;
+    private String description;
     private String notes;
 
 }
