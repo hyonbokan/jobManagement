@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Modal,
@@ -9,17 +9,50 @@ import {
 } from "@mui/material";
 import ApplicationStatus from "../enums/ApplicationStatus";
 
-const JobApplicationModal = ({ open, onClose, onSubmit }) => {
-  const [formData, setFormData] = useState({
-    position: "",
-    company: "",
-    status: ApplicationStatus.APPLIED,
-    applicationDate: "",
-    interviewDate: "",
-    link: "",
-    description: "",
-    notes: "",
-  });
+const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) => {
+  const initialFormData = {
+    position: defaultValues.position || "",
+    company: defaultValues.company || "",
+    status: defaultValues.status || ApplicationStatus.APPLIED,
+    applicationDate: defaultValues.applicationDate
+      ? defaultValues.applicationDate.split("T")[0] // Ensure correct format
+      : "",
+    interviewDate: defaultValues.interviewDate
+      ? defaultValues.interviewDate.split("T")[0]
+      : "",
+    link: defaultValues.link || "",
+    description: defaultValues.description || "",
+    notes: defaultValues.notes || "",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  useEffect(() => {
+    if (open) {
+      // Avoid unnecessary updates if data hasn't changed
+      setFormData((prevFormData) => {
+        const newFormData = {
+          position: defaultValues.position || "",
+          company: defaultValues.company || "",
+          status: defaultValues.status || ApplicationStatus.APPLIED,
+          applicationDate: defaultValues.applicationDate
+            ? defaultValues.applicationDate.split("T")[0]
+            : "",
+          interviewDate: defaultValues.interviewDate
+            ? defaultValues.interviewDate.split("T")[0]
+            : "",
+          link: defaultValues.link || "",
+          description: defaultValues.description || "",
+          notes: defaultValues.notes || "",
+        };
+
+        // Only update state if there's a difference
+        return JSON.stringify(prevFormData) === JSON.stringify(newFormData)
+          ? prevFormData
+          : newFormData;
+      });
+    }
+  }, [defaultValues, open]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,16 +61,6 @@ const JobApplicationModal = ({ open, onClose, onSubmit }) => {
 
   const handleSubmit = () => {
     onSubmit(formData);
-    setFormData({
-      position: "",
-      company: "",
-      status: ApplicationStatus.APPLIED,
-      applicationDate: "",
-      interviewDate: "",
-      link: "",
-      description: "",
-      notes: "",
-    });
     onClose();
   };
 
@@ -55,11 +78,11 @@ const JobApplicationModal = ({ open, onClose, onSubmit }) => {
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
-          overflow: "auto", // enable scrolling
+          overflowY: "auto",
         }}
       >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
-          Add Job Application
+          {defaultValues.position ? "Edit Job Application" : "Add Job Application"}
         </Typography>
         <TextField
           required
@@ -80,7 +103,6 @@ const JobApplicationModal = ({ open, onClose, onSubmit }) => {
           sx={{ mb: 2 }}
         />
         <TextField
-          required
           fullWidth
           label="Link"
           name="link"
@@ -125,26 +147,24 @@ const JobApplicationModal = ({ open, onClose, onSubmit }) => {
           slotProps={{
             inputLabel: { shrink: true },
           }}
-          in
           sx={{ mb: 2 }}
         />
         <TextField
-          required
           fullWidth
           multiline
+          rows={4}
           label="Description"
           name="description"
-          rows={8}
           value={formData.description}
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
         <TextField
           fullWidth
+          multiline
+          rows={4}
           label="Notes"
           name="notes"
-          multiline
-          rows={8}
           value={formData.notes}
           onChange={handleChange}
           sx={{ mb: 2 }}

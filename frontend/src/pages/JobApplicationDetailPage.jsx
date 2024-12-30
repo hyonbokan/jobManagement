@@ -2,21 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Button,
   CircularProgress,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { fetchJobApplicationById, deleteJobApplication } from "../api/jobApplicationApi";
+import JobApplicationModal from "../components/JobApplicationModal";
+import {
+  fetchJobApplicationById,
+  deleteJobApplication,
+  updateJobApplication,
+} from "../api/jobApplicationApi";
 
 const JobApplicationDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [application, setApplication] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const loadApplication = async () => {
@@ -33,9 +41,19 @@ const JobApplicationDetailPage = () => {
   const handleDelete = async () => {
     try {
       await deleteJobApplication(id);
-      navigate("/");
+      navigate("/"); // Redirect to home after deletion
     } catch (error) {
       console.error("Failed to delete application:", error);
+    }
+  };
+
+  const handleEditSubmit = async (updatedData) => {
+    try {
+      const updatedApplication = await updateJobApplication(id, updatedData);
+      setApplication(updatedApplication); // Update local state
+      setIsEditing(false); // Close modal
+    } catch (error) {
+      console.error("Failed to update application:", error);
     }
   };
 
@@ -54,86 +72,93 @@ const JobApplicationDetailPage = () => {
     );
   }
 
+  const renderTableRow = (label, value) => (
+    <TableRow>
+      <TableCell sx={{ fontWeight: "bold" }}>{label}</TableCell>
+      <TableCell>{value}</TableCell>
+    </TableRow>
+  );
+
   return (
-    <Box sx={{ padding: 4 }}>
-      <Card
+    <Box sx={{ padding: 4, maxWidth: 1000, margin: "auto" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+          Application Details
+        </Typography>
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate("/")}
+          sx={{ textTransform: "none" }}
+        >
+          Back
+        </Button>
+      </Box>
+      <Table sx={{ mb: 4 }}>
+        <TableBody>
+          {renderTableRow("Position", application.position)}
+          {renderTableRow("Company", application.company)}
+          {renderTableRow("Status", application.status)}
+          {renderTableRow(
+            "Link",
+            <a
+              href={application.link || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#1976d2", textDecoration: "none" }}
+            >
+              {application.link || "No Link Provided"}
+            </a>
+          )}
+          {renderTableRow(
+            "Application Date",
+            new Date(application.applicationDate).toLocaleDateString()
+          )}
+          {renderTableRow(
+            "Interview Date",
+            application.interviewDate
+              ? new Date(application.interviewDate).toLocaleDateString()
+              : "Not Set"
+          )}
+          {renderTableRow(
+            "Description",
+            application.description || "No Description Provided"
+          )}
+          {renderTableRow("Notes", application.notes || "No Notes Provided")}
+        </TableBody>
+      </Table>
+      <Box
         sx={{
-          maxWidth: 600,
-          margin: "auto",
-          boxShadow: 3,
-          borderRadius: 2,
-          overflow: "hidden",
+          mt: 4,
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 2,
         }}
       >
-        <CardContent>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-              Application Details
-            </Typography>
-            <Button
-              startIcon={<ArrowBackIcon />}
-              onClick={() => navigate("/")}
-              sx={{ textTransform: "none" }}
-            >
-              Back
-            </Button>
-          </Box>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Position:</strong> {application.position}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Company:</strong> {application.company}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Status:</strong> {application.status}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Application Date:</strong>{" "}
-            {new Date(application.applicationDate).toLocaleDateString()}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Interview Date:</strong>{" "}
-            {application.interviewDate
-              ? new Date(application.interviewDate).toLocaleDateString()
-              : "Not Set"}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Description:</strong>{" "}
-            {application.description ? application.description : "No Into Provided"}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>Notes:</strong>{" "}
-            {application.notes ? application.notes : "No Notes Provided"}
-          </Typography>
-          <Box
-            sx={{
-              mt: 4,
-              display: "flex",
-              justifyContent: "space-between",
-              gap: 2,
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={() => navigate(`/applications/edit/${id}`)}
-              sx={{ textTransform: "none" }}
-            >
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={handleDelete}
-              sx={{ textTransform: "none" }}
-            >
-              Delete
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<EditIcon />}
+          onClick={() => setIsEditing(true)}
+          sx={{ textTransform: "none" }}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={handleDelete}
+          sx={{ textTransform: "none" }}
+        >
+          Delete
+        </Button>
+      </Box>
+      <JobApplicationModal
+        open={isEditing}
+        onClose={() => setIsEditing(false)}
+        onSubmit={handleEditSubmit}
+        defaultValues={application} // Pre-fill modal
+      />
     </Box>
   );
 };
