@@ -7,7 +7,7 @@ export const fetchJobApplications = async () => {
     return response.data
 }
 
-export const fetchJobApplicationsById = async (id) => {
+export const fetchJobApplicationById = async (id) => {
     const response = await axios.get(`${BASE_URL}/job-applications/${id}`);
     return response.data;
 }

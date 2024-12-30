@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JobApplicationDTO {
+    private Long id;
     private String position;
     private String company;
     private ApplicationStatus status;

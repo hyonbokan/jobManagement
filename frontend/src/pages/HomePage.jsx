@@ -9,7 +9,7 @@ import { fetchJobApplications, createJobApplication } from "../api/jobApplicatio
 const HomePage = () => {
   const [applications, setApplications] = useState([]);
   const [filteredApplications, setFilteredApplications] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false); // State for modal visibility
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const loadApplications = async () => {

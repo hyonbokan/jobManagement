@@ -15,7 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.FutureOrPresent;
+// import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -50,11 +50,11 @@ public class JobApplication {
     private ApplicationStatus status = ApplicationStatus.APPLIED;
 
     @Temporal(TemporalType.DATE)
-    @FutureOrPresent(message = "Application date must be in the future or present.")
+    // @FutureOrPresent(message = "Application date must be in the future or present.")
     private Date applicationDate;
 
     @Temporal(TemporalType.DATE)
-    @FutureOrPresent(message = "Interview date must be in the future or present.")
+    // @FutureOrPresent(message = "Interview date must be in the future or present.")
     private  Date interviewDate;
 
     @Lob // Large Object for long notes
