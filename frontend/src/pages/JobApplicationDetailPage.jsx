@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import {
   Box,
   Typography,
@@ -41,7 +42,7 @@ const JobApplicationDetailPage = () => {
   const handleDelete = async () => {
     try {
       await deleteJobApplication(id);
-      navigate("/"); // Redirect to home after deletion
+      navigate("/");
     } catch (error) {
       console.error("Failed to delete application:", error);
     }
@@ -50,8 +51,8 @@ const JobApplicationDetailPage = () => {
   const handleEditSubmit = async (updatedData) => {
     try {
       const updatedApplication = await updateJobApplication(id, updatedData);
-      setApplication(updatedApplication); // Update local state
-      setIsEditing(false); // Close modal
+      setApplication(updatedApplication);
+      setIsEditing(false);
     } catch (error) {
       console.error("Failed to update application:", error);
     }
@@ -72,13 +73,6 @@ const JobApplicationDetailPage = () => {
     );
   }
 
-  const renderTableRow = (label, value) => (
-    <TableRow>
-      <TableCell sx={{ fontWeight: "bold" }}>{label}</TableCell>
-      <TableCell>{value}</TableCell>
-    </TableRow>
-  );
-
   return (
     <Box sx={{ padding: 4, maxWidth: 1000, margin: "auto" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
@@ -95,37 +89,73 @@ const JobApplicationDetailPage = () => {
       </Box>
       <Table sx={{ mb: 4 }}>
         <TableBody>
-          {renderTableRow("Position", application.position)}
-          {renderTableRow("Company", application.company)}
-          {renderTableRow("Status", application.status)}
-          {renderTableRow(
-            "Link",
-            <a
-              href={application.link || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#1976d2", textDecoration: "none" }}
-            >
-              {application.link || "No Link Provided"}
-            </a>
-          )}
-          {renderTableRow(
-            "Application Date",
-            new Date(application.applicationDate).toLocaleDateString()
-          )}
-          {renderTableRow(
-            "Interview Date",
-            application.interviewDate
-              ? new Date(application.interviewDate).toLocaleDateString()
-              : "Not Set"
-          )}
-          {renderTableRow(
-            "Description",
-            application.description || "No Description Provided"
-          )}
-          {renderTableRow("Notes", application.notes || "No Notes Provided")}
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Position</TableCell>
+            <TableCell>{application.position}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Company</TableCell>
+            <TableCell>{application.company}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
+            <TableCell>{application.status}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Link</TableCell>
+            <TableCell>
+              <a
+                href={application.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#1976d2", textDecoration: "none" }}
+              >
+                {application.link}
+              </a>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Application Date</TableCell>
+            <TableCell>
+              {new Date(application.applicationDate).toLocaleDateString()}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Interview Date</TableCell>
+            <TableCell>
+              {application.interviewDate
+                ? new Date(application.interviewDate).toLocaleDateString()
+                : "Not Set"}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
+      <Typography variant="h6" sx={{ mt: 4 }}>
+        Description
+      </Typography>
+      <Box
+        sx={{
+          backgroundColor: "#f9f9f9",
+          p: 2,
+          borderRadius: 2,
+          mb: 2,
+        }}
+      >
+        <ReactMarkdown>{application.description || "No Description Provided"}</ReactMarkdown>
+      </Box>
+      <Typography variant="h6" sx={{ mt: 4 }}>
+        Notes
+      </Typography>
+      <Box
+        sx={{
+          backgroundColor: "#f9f9f9",
+          p: 2,
+          borderRadius: 2,
+          mb: 4,
+        }}
+      >
+        <ReactMarkdown>{application.notes || "No Notes Provided"}</ReactMarkdown>
+      </Box>
       <Box
         sx={{
           mt: 4,
@@ -157,7 +187,7 @@ const JobApplicationDetailPage = () => {
         open={isEditing}
         onClose={() => setIsEditing(false)}
         onSubmit={handleEditSubmit}
-        defaultValues={application} // Pre-fill modal
+        defaultValues={application}
       />
     </Box>
   );

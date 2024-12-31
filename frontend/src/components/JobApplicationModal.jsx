@@ -10,53 +10,55 @@ import {
 import ApplicationStatus from "../enums/ApplicationStatus";
 
 const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) => {
-  const initialFormData = {
+  const [formData, setFormData] = useState({
     position: defaultValues.position || "",
     company: defaultValues.company || "",
     status: defaultValues.status || ApplicationStatus.APPLIED,
-    applicationDate: defaultValues.applicationDate
-      ? defaultValues.applicationDate.split("T")[0] // Ensure correct format
-      : "",
-    interviewDate: defaultValues.interviewDate
-      ? defaultValues.interviewDate.split("T")[0]
-      : "",
+    applicationDate: defaultValues.applicationDate?.split("T")[0] || "",
+    interviewDate: defaultValues.interviewDate?.split("T")[0] || "",
     link: defaultValues.link || "",
     description: defaultValues.description || "",
     notes: defaultValues.notes || "",
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
+  });
 
   useEffect(() => {
-    if (open) {
-      // Avoid unnecessary updates if data hasn't changed
-      setFormData((prevFormData) => {
-        const newFormData = {
-          position: defaultValues.position || "",
-          company: defaultValues.company || "",
-          status: defaultValues.status || ApplicationStatus.APPLIED,
-          applicationDate: defaultValues.applicationDate
-            ? defaultValues.applicationDate.split("T")[0]
-            : "",
-          interviewDate: defaultValues.interviewDate
-            ? defaultValues.interviewDate.split("T")[0]
-            : "",
-          link: defaultValues.link || "",
-          description: defaultValues.description || "",
-          notes: defaultValues.notes || "",
-        };
-
-        // Only update state if there's a difference
-        return JSON.stringify(prevFormData) === JSON.stringify(newFormData)
-          ? prevFormData
-          : newFormData;
-      });
-    }
-  }, [defaultValues, open]);
+    if (!open) return;
+  
+    // Prepare the new values
+    const updatedFormData = {
+      position: defaultValues.position || "",
+      company: defaultValues.company || "",
+      status: defaultValues.status || ApplicationStatus.APPLIED,
+      applicationDate: defaultValues.applicationDate?.split("T")[0] || "",
+      interviewDate: defaultValues.interviewDate?.split("T")[0] || "",
+      link: defaultValues.link || "",
+      description: defaultValues.description || "",
+      notes: defaultValues.notes || "",
+    };
+  
+    // Only update state if the values have actually changed
+    setFormData((prev) => {
+      if (JSON.stringify(prev) === JSON.stringify(updatedFormData)) {
+        return prev; // No change, do nothing
+      }
+      return updatedFormData;
+    });
+  }, [
+    open,
+    defaultValues.position,
+    defaultValues.company,
+    defaultValues.status,
+    defaultValues.applicationDate,
+    defaultValues.interviewDate,
+    defaultValues.link,
+    defaultValues.description,
+    defaultValues.notes
+  ]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = () => {
@@ -132,9 +134,7 @@ const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) =>
           type="date"
           value={formData.applicationDate}
           onChange={handleChange}
-          slotProps={{
-            inputLabel: { shrink: true },
-          }}
+          InputLabelProps={{ shrink: true }}
           sx={{ mb: 2 }}
         />
         <TextField
@@ -144,9 +144,7 @@ const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) =>
           type="date"
           value={formData.interviewDate}
           onChange={handleChange}
-          slotProps={{
-            inputLabel: { shrink: true },
-          }}
+          InputLabelProps={{ shrink: true }}
           sx={{ mb: 2 }}
         />
         <TextField
