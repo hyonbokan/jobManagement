@@ -1,8 +1,14 @@
 import React from "react";
 import { Box, List, ListItemButton, ListItemText, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    const navItems = ["Dashboard", "Applications"];
+    const navItems = [
+        { label: "Dashboard", path: "/" },
+        // { label: "Applications", path: "/applications" },
+    ];
+
+    const navigate = useNavigate();
 
     return (
         <Box
@@ -23,16 +29,17 @@ const Navbar = () => {
                 {navItems.map((item, index) => (
                     <ListItemButton
                         key={index}
+                        onClick={() => navigate(item.path)} // Navigate to the respective path
                         sx={{
                             borderRadius: 2,
                             mb: 1,
                         }}
                     >
                         <ListItemText
-                            primary={item}
+                            primary={item.label}
                             slotProps={{
                                 primary: {
-                                    sx: { fontFamily: "Roboto Condensed", fontSize: 18},
+                                    sx: { fontFamily: "Roboto Condensed", fontSize: 18 },
                                 },
                             }}
                         />

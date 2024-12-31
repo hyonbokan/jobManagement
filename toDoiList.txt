@@ -1,2 +1,2 @@
-- module and detail page description, notes conform with .md
 - status modification
+- stats and charts??

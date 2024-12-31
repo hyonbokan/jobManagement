@@ -74,8 +74,9 @@ const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) =>
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 600,
-          maxHeight: "80vh",
+          width: 900,
+          height: "85vh",
+          maxHeight: "90vh",
           bgcolor: "background.paper",
           boxShadow: 24,
           p: 4,
@@ -134,7 +135,9 @@ const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) =>
           type="date"
           value={formData.applicationDate}
           onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{
+            inputLabel: { shrink: true },
+          }}
           sx={{ mb: 2 }}
         />
         <TextField
@@ -144,13 +147,15 @@ const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) =>
           type="date"
           value={formData.interviewDate}
           onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{
+            inputLabel: { shrink: true },
+          }}
           sx={{ mb: 2 }}
         />
         <TextField
           fullWidth
           multiline
-          rows={4}
+          rows={10}
           label="Description"
           name="description"
           value={formData.description}
@@ -160,7 +165,7 @@ const JobApplicationModal = ({ open, onClose, onSubmit, defaultValues = {} }) =>
         <TextField
           fullWidth
           multiline
-          rows={4}
+          rows={10}
           label="Notes"
           name="notes"
           value={formData.notes}
