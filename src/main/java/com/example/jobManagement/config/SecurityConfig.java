@@ -20,7 +20,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/job-applications/**"
+                    "/job-applications/**",
+                    "/stats/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             );
