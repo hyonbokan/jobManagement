@@ -1,28 +1,24 @@
 package com.example.jobManagement.service;
 
-import org.springframework.stereotype.Service;
-
-import com.example.jobManagement.dto.StatsDTO;
-import com.example.jobManagement.entity.Stats;
-import com.example.jobManagement.mapper.StatsMapper;
-import com.example.jobManagement.repository.JobApplicationRepository;
-import com.example.jobManagement.repository.StatsRepository;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.example.jobManagement.dto.StatsDTO;
+import com.example.jobManagement.repository.JobApplicationRepository;
+import com.example.jobManagement.repository.StatsRepository;
 
 
 @Service
 public class StatsService {
     
     private final StatsRepository statsRepository;
-    private final StatsMapper statsMapper;
     private final JobApplicationRepository jobApplicationRepository;
 
-    public StatsService(StatsRepository statsRepository, StatsMapper statsMapper, JobApplicationRepository jobApplicationRepository) {
+    public StatsService(StatsRepository statsRepository, JobApplicationRepository jobApplicationRepository) {
         this.statsRepository = statsRepository;
-        this.statsMapper = statsMapper;
         this.jobApplicationRepository = jobApplicationRepository;
     }
 
@@ -54,12 +50,32 @@ public class StatsService {
         return trends;
     }
 
-    public long getTotalApplicationCount() {
+    public Long fetchTotalApplicationCount() {
         return jobApplicationRepository.count();
     }
     
-    // public StatsDTO getStatsSummary() {
+    public StatsDTO fetchStatsSummary() {
+        StatsDTO statsDTO = new StatsDTO();
+        
+        long totalApplications = jobApplicationRepository.count();
+        statsDTO.setTotalApplications(totalApplications);
+        
+        long totalRejected = statsRepository.getTotalRejectedCount();
+        statsDTO.setTotalRejected(totalRejected);
 
-    // }
+        long totalAccepted = statsRepository.getTotalAcceptedCount();
+        statsDTO.setTotalAccepted(totalAccepted);
+
+        long interviewScheduled = statsRepository.getInterviewScheduledCount();
+        statsDTO.setInterviewScheduled(interviewScheduled);
+
+        Map<String, Long> applicationsByStatus = fetchApplicationCountByStatus();
+        statsDTO.setApplicationsByStatus(applicationsByStatus);
+
+        Map<String, Long> applicationsTrend = fetchApplicationsCountByDate();
+        statsDTO.setApplicationsTrend(applicationsTrend);
+        
+        return statsDTO;
+    }
 
 }

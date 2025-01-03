@@ -1,15 +1,14 @@
 package com.example.jobManagement.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.jobManagement.service.StatsService;
-
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.jobManagement.dto.StatsDTO;
+import com.example.jobManagement.service.StatsService;
 
 
 
@@ -34,4 +33,13 @@ public class StatsController {
         return ResponseEntity.ok(statsService.fetchApplicationsCountByDate());
     }
     
+    @GetMapping("/total")
+    public ResponseEntity<Long> getTotalApplicationCount() {
+        return ResponseEntity.ok(statsService.fetchTotalApplicationCount());
+    }
+    
+    @GetMapping("/summary")
+    public ResponseEntity<StatsDTO> getStatsSummary() {
+        return ResponseEntity.ok(statsService.fetchStatsSummary());
+    }
 }

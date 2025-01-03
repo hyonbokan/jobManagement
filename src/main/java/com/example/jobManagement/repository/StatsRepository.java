@@ -1,11 +1,11 @@
 package com.example.jobManagement.repository;
 
-import com.example.jobManagement.entity.Stats;
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import com.example.jobManagement.entity.Stats;
 
 
 public interface StatsRepository extends JpaRepository<Stats, Long> {
