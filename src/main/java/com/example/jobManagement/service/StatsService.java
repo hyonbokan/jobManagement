@@ -2,7 +2,10 @@ package com.example.jobManagement.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.jobManagement.dto.StatsDTO;
+import com.example.jobManagement.entity.Stats;
 import com.example.jobManagement.mapper.StatsMapper;
+import com.example.jobManagement.repository.JobApplicationRepository;
 import com.example.jobManagement.repository.StatsRepository;
 
 import java.util.HashMap;
@@ -15,10 +18,12 @@ public class StatsService {
     
     private final StatsRepository statsRepository;
     private final StatsMapper statsMapper;
+    private final JobApplicationRepository jobApplicationRepository;
 
-    public StatsService(StatsRepository statsRepository, StatsMapper statsMapper) {
+    public StatsService(StatsRepository statsRepository, StatsMapper statsMapper, JobApplicationRepository jobApplicationRepository) {
         this.statsRepository = statsRepository;
         this.statsMapper = statsMapper;
+        this.jobApplicationRepository = jobApplicationRepository;
     }
 
 
@@ -35,8 +40,8 @@ public class StatsService {
         return applicationCounts;
     }
 
-    public Map<String, Long>  fetchApplicationsTrendByDate() {
-        List<Object []> rawData = statsRepository.getApplicationsTrendByDate();
+    public Map<String, Long>  fetchApplicationsCountByDate() {
+        List<Object []> rawData = statsRepository.getApplicationsCountByDate();
         Map<String, Long> trends = new HashMap<>();
 
         for (Object [] row : rawData) {
@@ -48,4 +53,13 @@ public class StatsService {
 
         return trends;
     }
+
+    public long getTotalApplicationCount() {
+        return jobApplicationRepository.count();
+    }
+    
+    // public StatsDTO getStatsSummary() {
+
+    // }
+
 }

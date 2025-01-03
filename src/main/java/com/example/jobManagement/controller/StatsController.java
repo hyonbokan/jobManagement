@@ -24,10 +24,14 @@ public class StatsController {
         this.statsService = statsService;
     }
     
-    @GetMapping
+    @GetMapping("/by-status")
     public ResponseEntity<Map<String, Long>> getApplicationByStatus() {
-        Map<String, Long> application = statsService.fetchApplicationCountByStatus();
-        return ResponseEntity.ok(application);
+        return ResponseEntity.ok(statsService.fetchApplicationCountByStatus());
+    }
+
+    @GetMapping("/count-by-date")
+    public ResponseEntity<Map<String, Long>> getApplicationsCountByDate() {
+        return ResponseEntity.ok(statsService.fetchApplicationsCountByDate());
     }
     
 }

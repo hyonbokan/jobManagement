@@ -14,7 +14,7 @@ public interface StatsRepository extends JpaRepository<Stats, Long> {
     List<Object[]> getApplicationCountByStatus();
 
     @Query("SELECT FUNCTION('DATE', applicationDate), COUNT(*) FROM JobApplication GROUP BY FUNCTION('DATE', applicationDate) ORDER BY FUNCTION('DATE', applicationDate)")
-    List<Object[]> getApplicationsTrendByDate();
+    List<Object[]> getApplicationsCountByDate();
 
     @Query("SELECT COUNT(*) FROM JobApplication")
     long getTotalApplications();
