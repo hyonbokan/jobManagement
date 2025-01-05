@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
     const navItems = [
         { label: "Dashboard", path: "/" },
-        // { label: "Statistics", path: "/stats" },
+        { label: "Statistics", path: "/stats" },
     ];
 
     const navigate = useNavigate();

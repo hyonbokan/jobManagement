@@ -29,6 +29,11 @@ export const createJobApplication = async (application) => {
 
 export const updateJobApplication = async (id, application) => {
     const response = await axios.put(`${BASE_URL}/job-applications/${id}`, application);
-    console.log(response.data);
+    // console.log(response.data);
+    return response.data;
+}
+
+export const fetchStats = async () => {
+    const response = await axios.get(`${BASE_URL}/stats/summary`);
     return response.data;
 }
