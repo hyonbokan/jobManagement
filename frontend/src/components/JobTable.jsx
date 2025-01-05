@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TableContainer,
   Table,
@@ -6,11 +6,26 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import StatusChip from "./StatusChip";
 
-const JobTable = ({ applications }) => {
-  const navigate = useNavigate();
+const JobTable = ({ applications, onEdit, onDelete }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [currentApplication, setCurrentApplication] = useState(null);
+
+  const handleMenuOpen = (event, application) => {
+    setAnchorEl(event.currentTarget);
+    setCurrentApplication(application);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setCurrentApplication(null);
+  };
 
   return (
     <TableContainer
@@ -23,46 +38,67 @@ const JobTable = ({ applications }) => {
             <TableCell>Position</TableCell>
             <TableCell>Company</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Applied Time</TableCell>
-            <TableCell>Interview Time</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {applications.map((application) => {
-            if (!application.id) {
-              // console.error("Missing unique id for application:", application);
-              return null;
-            }
-            return (
-              <TableRow
-                key={application.id}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { backgroundColor: "#f5f5f5" },
-                }}
-                onClick={() => navigate(`/application/${application.id}`)}
-              >
-                <TableCell>
-                  {application.applicationDate
-                    ? new Date(application.applicationDate).toLocaleDateString()
-                    : "N/A"}
-                </TableCell>
-                <TableCell>{application.position || "N/A"}</TableCell>
-                <TableCell>{application.company || "N/A"}</TableCell>
-                <TableCell>{application.status || "N/A"}</TableCell>
-                <TableCell>
-                  {application.applicationDate
-                    ? new Date(application.applicationDate).toLocaleTimeString()
-                    : "N/A"}
-                </TableCell>
-                <TableCell>
-                  {application.interviewDate
-                    ? new Date(application.interviewDate).toLocaleDateString()
-                    : "N/A"}
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {applications.map((application) => (
+            <TableRow
+              key={application.id}
+              sx={{
+                cursor: "pointer",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+              }}
+              onClick={() =>
+                (window.location.href = `/application/${application.id}`)
+              }
+            >
+              <TableCell>
+                {application.applicationDate
+                  ? new Date(application.applicationDate).toLocaleDateString()
+                  : "N/A"}
+              </TableCell>
+              <TableCell>{application.position}</TableCell>
+              <TableCell>{application.company}</TableCell>
+              <TableCell>
+                <StatusChip
+                      text={application.status}
+                    />
+              </TableCell>
+              <TableCell>
+                <IconButton
+                  onClick={(event) => {
+                    event.stopPropagation(); // Prevent row click from triggering navigation
+                    handleMenuOpen(event, application);
+                  }}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  {/* <MenuItem
+                    onClick={() => {
+                      onEdit(currentApplication);
+                      handleMenuClose();
+                    }}
+                  >
+                    Edit
+                  </MenuItem> */}
+                  <MenuItem
+                    onClick={() => {
+                      onDelete(currentApplication.id);
+                      handleMenuClose();
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                </Menu>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

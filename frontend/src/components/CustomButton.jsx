@@ -11,7 +11,7 @@ const CustomButton = ({ text, size = "medium", onClick, sx = {}, ...props }) => 
       sx={{
         borderRadius: 2,
         textTransform: "none",
-        ...sx, // Allow overriding styles
+        ...sx,
       }}
       {...props} // Pass additional props like `startIcon`, `endIcon`
     >

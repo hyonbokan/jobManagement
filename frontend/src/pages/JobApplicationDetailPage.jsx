@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import JobApplicationModal from "../components/JobApplicationModal";
+import StatusChip from "../components/StatusChip";
 import {
   fetchJobApplicationById,
   deleteJobApplication,
@@ -99,7 +100,11 @@ const JobApplicationDetailPage = () => {
           </TableRow>
           <TableRow>
             <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
-            <TableCell>{application.status}</TableCell>
+            <TableCell>
+              <StatusChip 
+                text = {application.status}
+              />
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell sx={{ fontWeight: "bold" }}>Link</TableCell>
