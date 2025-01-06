@@ -67,10 +67,10 @@ const StatsPage = () => {
         <Grid2 container spacing={4} sx={{ justifyContent: 'center', alignItems: 'center' }}>
           {/* Overview Stats */}
           <Grid2 xs={12} md={3}>
-            <StatCard title="Total Applications" count={stats.totalApplications} />
+            <StatCard title="Applications" count={stats.totalApplications} />
           </Grid2>
           <Grid2 xs={12} md={3}>
-            <StatCard title="Interviews Scheduled" count={stats.interviewScheduled} />
+            <StatCard title="Interviews" count={stats.interviewScheduled} />
           </Grid2>
           <Grid2 xs={12} md={3}>
             <StatCard title="Accepted" count={stats.totalAccepted} />
@@ -79,7 +79,7 @@ const StatsPage = () => {
             <StatCard title="Rejected" count={stats.totalRejected} />
           </Grid2>
           <Grid2 xs={12} md={3}>
-            <StatCard title="Unanswered" count={stats.unanswered} />
+            <StatCard title="Unanswered" count={stats.totalUnanswered} />
           </Grid2>
         </Grid2>
 

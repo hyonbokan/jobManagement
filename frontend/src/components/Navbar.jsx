@@ -14,7 +14,6 @@ const Navbar = () => {
         <Box
             sx={{
                 width: 180,
-                height: "100vh",
                 backgroundColor: "#f5f5f5",
                 display: "flex",
                 flexDirection: "column",

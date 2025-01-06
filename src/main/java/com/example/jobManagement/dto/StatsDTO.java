@@ -12,6 +12,7 @@ public class StatsDTO {
     private long interviewScheduled;
     private long totalRejected;
     private long totalAccepted;
+    private long totalUnanswered;
 
     private Map<String, Long> applicationsByStatus;
     private Map<String, Long> applicationsTrend;
@@ -24,8 +25,12 @@ public class StatsDTO {
         this.totalAccepted = totalAccepted;
     }
 
-    public void setTotalApplications(long totalApplications){
+    public void setTotalApplications(long totalApplications) {
         this.totalApplications = totalApplications;
+    }
+
+    public void setTotalUnanswered(long totalUnanswered) {
+        this.totalUnanswered = totalUnanswered;
     }
 
     public void setInterviewScheduled(long interviewScheduled) {

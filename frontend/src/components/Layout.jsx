@@ -8,12 +8,11 @@ const Layout = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
 
     const toggleNavbar = () => {
-        setIsNavbarOpen((prev) => !prev);
+        setIsNavbarOpen((prev) => !prev)
     };
 
     return (
-        <Box sx={{ display: "flex", height: "100vh" }}>
-            {/* Navbar */}
+        <Box sx={{ display: "flex", minHeight: "100vh" }}>
             {isNavbarOpen && <Navbar />}
 
             {/* Menu Icon */}
@@ -36,11 +35,12 @@ const Layout = () => {
             <Box
                 sx={{
                     flex: 1,
+                    overflowY: "auto",
                     marginLeft: isNavbarOpen ? "40px" : "60px",
                     transition: "margin-left 0.3s",
                 }}
             >
-                <Outlet /> {/* Render child routes here */}
+                <Outlet />
             </Box>
         </Box>
     );

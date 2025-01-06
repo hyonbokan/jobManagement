@@ -35,5 +35,6 @@ export const updateJobApplication = async (id, application) => {
 
 export const fetchStats = async () => {
     const response = await axios.get(`${BASE_URL}/stats/summary`);
+    console.log(response.data);
     return response.data;
 }

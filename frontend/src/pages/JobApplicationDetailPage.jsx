@@ -135,7 +135,7 @@ const JobApplicationDetailPage = () => {
           </TableRow>
         </TableBody>
       </Table>
-      <Typography variant="h6" sx={{ mt: 4 }}>
+      <Typography variant="h6" sx={{ mt: 4, fontWeight: "bold" }}>
         Description
       </Typography>
       <Box
@@ -148,7 +148,7 @@ const JobApplicationDetailPage = () => {
       >
         <ReactMarkdown>{application.description || "No Description Provided"}</ReactMarkdown>
       </Box>
-      <Typography variant="h6" sx={{ mt: 4 }}>
+      <Typography variant="h6" sx={{ mt: 4, fontWeight: "bold" }}>
         Notes
       </Typography>
       <Box

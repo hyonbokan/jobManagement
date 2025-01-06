@@ -25,6 +25,9 @@ public interface StatsRepository extends JpaRepository<Stats, Long> {
     @Query("SELECT COUNT(*) FROM JobApplication WHERE status = 'REJECTED'")
     long getTotalRejectedCount();
 
+    @Query("SELECT COUNT(*) FROM JobApplication WHERE status = 'UNANSWERED'")
+    long getTotalUnanswered();
+
     @Query("SELECT COUNT(*) FROM JobApplication WHERE status = 'ACCEPTED'")
     long getTotalAcceptedCount();
 }

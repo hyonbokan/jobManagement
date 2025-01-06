@@ -102,7 +102,7 @@ const HomePage = () => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-      <Box sx={{ flex: 1, padding: 4, overflowY: "auto" }}>xw
+      <Box sx={{ flex: 1, padding: 4, overflowY: "auto" }}>
         <SearchBar onSearch={handleSearch} />
         <CustomButton
           text="+ Add Job Application"

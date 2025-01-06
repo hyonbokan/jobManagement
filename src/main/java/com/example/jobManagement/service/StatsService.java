@@ -69,6 +69,9 @@ public class StatsService {
         long interviewScheduled = statsRepository.getInterviewScheduledCount();
         statsDTO.setInterviewScheduled(interviewScheduled);
 
+        long totalUnanswered = statsRepository.getTotalUnanswered();
+        statsDTO.setTotalUnanswered(totalUnanswered);
+
         Map<String, Long> applicationsByStatus = fetchApplicationCountByStatus();
         statsDTO.setApplicationsByStatus(applicationsByStatus);
 

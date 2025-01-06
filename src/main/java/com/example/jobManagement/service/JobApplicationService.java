@@ -1,15 +1,14 @@
 package com.example.jobManagement.service;
 
-import com.example.jobManagement.dto.JobApplicationDTO;
-import com.example.jobManagement.entity.JobApplication;
-import com.example.jobManagement.mapper.JobApplicationMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.example.jobManagement.dto.JobApplicationDTO;
+import com.example.jobManagement.entity.JobApplication;
+import com.example.jobManagement.mapper.JobApplicationMapper;
 import com.example.jobManagement.repository.JobApplicationRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class JobApplicationService {
