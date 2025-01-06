@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, Paper, CircularProgress, Grid2 } from '@mui/material';
 import { fetchStats } from '../api/jobApplicationApi';
 import { PieChart, Pie, Tooltip, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
+import StatCard from '../components/StatCard';
 
 const StatsPage = () => {
   const [stats, setStats] = useState(null);
@@ -66,36 +67,19 @@ const StatsPage = () => {
         <Grid2 container spacing={4} sx={{ justifyContent: 'center', alignItems: 'center' }}>
           {/* Overview Stats */}
           <Grid2 xs={12} md={3}>
-            <Paper sx={{ padding: 2, textAlign: 'center' }}>
-              <Typography variant="h6">Total Applications</Typography>
-              <Typography variant="h4" color="primary">
-                {stats.totalApplications}
-              </Typography>
-            </Paper>
+            <StatCard title="Total Applications" count={stats.totalApplications} />
           </Grid2>
           <Grid2 xs={12} md={3}>
-            <Paper sx={{ padding: 2, textAlign: 'center' }}>
-              <Typography variant="h6">Interviews Scheduled</Typography>
-              <Typography variant="h4" color="primary">
-                {stats.interviewScheduled}
-              </Typography>
-            </Paper>
+            <StatCard title="Interviews Scheduled" count={stats.interviewScheduled} />
           </Grid2>
           <Grid2 xs={12} md={3}>
-            <Paper sx={{ padding: 2, textAlign: 'center' }}>
-              <Typography variant="h6">Accepted</Typography>
-              <Typography variant="h4" color="primary">
-                {stats.totalAccepted}
-              </Typography>
-            </Paper>
+            <StatCard title="Accepted" count={stats.totalAccepted} />
           </Grid2>
           <Grid2 xs={12} md={3}>
-            <Paper sx={{ padding: 2, textAlign: 'center' }}>
-              <Typography variant="h6">Rejected</Typography>
-              <Typography variant="h4" color="primary">
-                {stats.totalRejected}
-              </Typography>
-            </Paper>
+            <StatCard title="Rejected" count={stats.totalRejected} />
+          </Grid2>
+          <Grid2 xs={12} md={3}>
+            <StatCard title="Unanswered" count={stats.unanswered} />
           </Grid2>
         </Grid2>
 

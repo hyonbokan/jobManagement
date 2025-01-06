@@ -4,6 +4,7 @@ const ApplicationStatus = {
     OFFERED: "OFFERED",
     REJECTED: "REJECTED",
     ACCEPTED: "ACCEPTED",
+    UNANSWERED: "UNANSWERED",
   };
   
   export default ApplicationStatus;

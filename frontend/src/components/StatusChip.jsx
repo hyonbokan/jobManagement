@@ -7,15 +7,17 @@ const StatusChip = ({ text }) => {
   const getColor = (status) => {
     switch (status) {
       case ApplicationStatus.APPLIED:
-        return "#1976d2";
+        return "#6495ed";
       case ApplicationStatus.INTERVIEWING:
         return "#ff9800";
       case ApplicationStatus.OFFERED:
-        return "#4caf50";
+        return "#daa520";
       case ApplicationStatus.REJECTED:
         return "#f44336";
       case ApplicationStatus.ACCEPTED:
         return "#4caf50";
+      case ApplicationStatus.UNANSWERED:
+        return '#808080'
       default:
         return "#9e9e9e";
     }

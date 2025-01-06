@@ -34,11 +34,11 @@ const JobTable = ({ applications, onEdit, onDelete }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Position</TableCell>
-            <TableCell>Company</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>Date</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', width: '25%' }}>Position</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', width: '25%' }}>Company</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>Status</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', width: '10%' }}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -79,16 +79,18 @@ const JobTable = ({ applications, onEdit, onDelete }) => {
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  {/* <MenuItem
-                    onClick={() => {
+                  <MenuItem
+                    onClick={(e) => {
+                      e.stopPropagation();
                       onEdit(currentApplication);
                       handleMenuClose();
                     }}
                   >
                     Edit
-                  </MenuItem> */}
+                  </MenuItem>
                   <MenuItem
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       onDelete(currentApplication.id);
                       handleMenuClose();
                     }}

@@ -1,3 +1,2 @@
+- New Status: No response (time condition?)
 - StatsPage improve the UI
-- Status add colored dot
-- quick action: elipsis for actions: delete, edit? 

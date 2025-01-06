@@ -5,6 +5,7 @@ import java.util.Date;
 import com.example.jobManagement.enums.ApplicationStatus;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -43,9 +44,11 @@ public class JobApplication {
 
     @NotBlank(message = "Description is required")
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "applicationstatus")
     private ApplicationStatus status = ApplicationStatus.APPLIED;
 
     @Temporal(TemporalType.DATE)
