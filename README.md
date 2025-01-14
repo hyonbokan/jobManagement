@@ -1,5 +1,9 @@
 # Job Application Tracker
 
+<div align="center">
+  <img src="media/job_application_demo.gif" alt="Job Application Demo" style="max-width: 300px; height: auto;" />
+</div>
+
 A full-stack web application for tracking job applications and managing related data efficiently. The project integrates a **Spring Boot** backend with a **React** frontend, showcasing comprehensive RESTful API implementation, and an intuitive user interface.
 
 ---
